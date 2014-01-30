@@ -29,7 +29,7 @@ Whatever object is receiving messages needs to be a
     [oscServer startListening];
 
     - (void)takeMessage:(F53OSCMessage *)message {
-        NSString *addressPatter = message.addressPattern;
+        NSString *addressPattern = message.addressPattern;
         NSArray *arguments = message.arguments;
     }
 
