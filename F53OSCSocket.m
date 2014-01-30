@@ -39,12 +39,12 @@
 
 + (F53OSCSocket *) socketWithTcpSocket:(GCDAsyncSocket *)socket
 {
-    return [[[F53OSCSocket alloc] initWithTcpSocket:socket] autorelease];
+    return [[F53OSCSocket alloc] initWithTcpSocket:socket];
 }
 
 + (F53OSCSocket *) socketWithUdpSocket:(GCDAsyncUdpSocket *)socket
 {
-    return [[[F53OSCSocket alloc] initWithUdpSocket:socket] autorelease];
+    return [[F53OSCSocket alloc] initWithUdpSocket:socket];
 }
 
 - (id) initWithTcpSocket:(GCDAsyncSocket *)socket;
@@ -52,7 +52,7 @@
     self = [super init];
     if ( self )
     {
-        _tcpSocket = [socket retain];
+        _tcpSocket = socket;
         _udpSocket = nil;
         _host = @"localhost";
         _port = 0;
@@ -66,7 +66,7 @@
     if ( self )
     {
         _tcpSocket = nil;
-        _udpSocket = [socket retain];
+        _udpSocket = socket;
         _host = @"localhost";
         _port = 0;
     }
@@ -77,17 +77,17 @@
 {
     [_tcpSocket setDelegate:nil];
     [_tcpSocket disconnect];
-    [_tcpSocket release];
+    //[_tcpSocket release];
     _tcpSocket = nil;
     
     [_udpSocket setDelegate:nil];
-    [_udpSocket release];
+    //[_udpSocket release];
     _udpSocket = nil;
     
-    [_host release];
+    //[_host release];
     _host = nil;
     
-    [super dealloc];
+    //[super dealloc];
 }
 
 - (NSString *) description

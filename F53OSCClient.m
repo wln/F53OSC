@@ -43,7 +43,7 @@
     [_readState removeObjectForKey:@"socket"];
     
     [_socket disconnect];
-    [_socket autorelease];
+    //[_socket autorelease];
     _socket = nil;
 }
 
@@ -51,15 +51,15 @@
 {
     if ( _useTcp )
     {
-        GCDAsyncSocket *tcpSocket = [[[GCDAsyncSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_main_queue()] autorelease];
-        _socket = [[F53OSCSocket socketWithTcpSocket:tcpSocket] retain];
+        GCDAsyncSocket *tcpSocket = [[GCDAsyncSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
+        _socket = [F53OSCSocket socketWithTcpSocket:tcpSocket];
         if ( _socket )
             [_readState setObject:_socket forKey:@"socket"];
     }
     else
     {
-        GCDAsyncUdpSocket *udpSocket = [[[GCDAsyncUdpSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_main_queue()] autorelease];
-        _socket = [[F53OSCSocket socketWithUdpSocket:udpSocket] retain];
+        GCDAsyncUdpSocket *udpSocket = [[GCDAsyncUdpSocket alloc] initWithDelegate:self delegateQueue:dispatch_get_main_queue()];
+        _socket = [F53OSCSocket socketWithUdpSocket:udpSocket];
     }
     _socket.host = self.host;
     _socket.port = self.port;
@@ -81,29 +81,19 @@
         _useTcp = NO;
         _userData = nil;
         _socket = nil;
-        _readData = [[NSMutableData data] retain];
-        _readState = [[NSMutableDictionary dictionary] retain];
+        _readData = [NSMutableData data];
+        _readState = [NSMutableDictionary dictionary];
     }
     return self;
 }
 
 - (void) dealloc
 {
-    [_host release];
     _host = nil;
-    
-    [_userData release];
     _userData = nil;
-    
     [self _destroySocket];
-    
-    [_readData release];
     _readData = nil;
-    
-    [_readState release];
     _readState = nil;
-    
-    [super dealloc];
 }
 
 - (void) encodeWithCoder:(NSCoder *)coder
@@ -120,13 +110,13 @@
     if ( self )
     {
         _delegate = nil;
-        _host = [[coder decodeObjectForKey:@"host"] retain];
+        _host = [coder decodeObjectForKey:@"host"];
         _port = [[coder decodeObjectForKey:@"port"] unsignedShortValue];
         _useTcp = [[coder decodeObjectForKey:@"useTcp"] boolValue];
-        _userData = [[coder decodeObjectForKey:@"userData"] retain];
+        _userData = [coder decodeObjectForKey:@"userData"];
         _socket = nil;
-        _readData = [[NSMutableData data] retain];
-        _readState = [[NSMutableDictionary dictionary] retain];
+        _readData = [NSMutableData data];
+        _readState = [NSMutableDictionary dictionary];
     }
     return self;
 }
@@ -144,8 +134,6 @@
 {
     if ( [host isEqualToString:@""] )
         host = nil;
-    
-    [_host autorelease];
     _host = [host copy];
     _socket.host = _host;
 }
@@ -177,8 +165,7 @@
     if ( userData == [NSNull null] )
         userData = nil;
     
-    [_userData autorelease];
-    _userData = [userData retain];
+    _userData = userData;
 }
 
 - (NSDictionary *) state
@@ -243,6 +230,14 @@
     {
         NSLog( @"Error: F53OSCClient could not send data; no socket available." );
     }
+}
+
+// CPM added 20140129
+- (void) sendPacket:(F53OSCPacket *)packet toHost:(NSString *)host onPort:(UInt16)port
+{
+    [self setHost:host];
+    [self setPort:port];
+    [self sendPacket:packet];
 }
 
 #pragma mark - GCDAsyncSocketDelegate

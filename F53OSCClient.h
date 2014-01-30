@@ -36,7 +36,7 @@
 
 @interface F53OSCClient : NSObject <NSCoding, GCDAsyncSocketDelegate, GCDAsyncUdpSocketDelegate>
 {
-    id <F53OSCPacketDestination, F53OSCClientDelegate> _delegate;
+    //id <F53OSCPacketDestination, F53OSCClientDelegate> _delegate;
     NSString *_host;
     UInt16 _port;
     BOOL _useTcp;
@@ -60,7 +60,7 @@
 - (void) disconnect;
 
 - (void) sendPacket:(F53OSCPacket *)packet;
-
+- (void) sendPacket:(F53OSCPacket *)packet toHost:(NSString *)host onPort:(UInt16)port; // added CPM 20140129
 @end
 
 @protocol F53OSCClientDelegate <NSObject>

@@ -57,6 +57,8 @@
 ///
 + (NSString *) stringWithOSCStringBytes:(const char *)buf maxLength:(NSUInteger)maxLength length:(NSUInteger *)outLength
 {
+    NSString *result = nil;
+    
     if ( buf == NULL || maxLength == 0 )
         return nil;
     
@@ -66,8 +68,6 @@
             goto valid; // Found a null character within the buffer.
     }
     return nil; // Buffer wasn't null terminated, so it's not a valid OSC string.
-    
-    NSString *result = nil;
     
 valid:
     
