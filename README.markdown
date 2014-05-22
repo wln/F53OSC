@@ -33,7 +33,14 @@ Whatever object is receiving messages needs to be a
         NSArray *arguments = message.arguments;
     }
 
+## More information
+
+I've put an example iPhone app project, [ExampleOSC](http://github.com/cpmpercussion/ExampleOSC), up on GitHub that shows how to
+use the library in context. 
+
 # F53OSC
+
+Here's the original readme from F53OSC:
 
 Hey neat, it's a nice open source OSC library for Objective-C.
 
