@@ -100,13 +100,13 @@ Pod::Spec.new do |s|
   # s.public_header_files = "Classes/**/*.h"
 
   s.source_files = '*.{h,m}'
-  s.requires_arc = false
+  s.requires_arc = true
 
-  s.exclude_files = "GCDAsync*.{h,m}"
-  s.subspec 'arc' do |as|
-    as.source_files = "GCDAsync*.{h,m}"
-    as.requires_arc = true
-  end
+#  s.exclude_files = "GCDAsync*.{h,m}"
+#   s.subspec 'arc' do |as|
+#     as.source_files = "GCDAsync*.{h,m}"
+#     as.requires_arc = true
+#   end
 
 
   # ――― Resources ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
