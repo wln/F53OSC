@@ -102,6 +102,7 @@ Pod::Spec.new do |s|
   s.source_files = '*.{h,m}'
   s.requires_arc = true
 
+  s.exclude_files = "MetatoneNetworkManager*.{h,m}"
 #  s.exclude_files = "GCDAsync*.{h,m}"
 #   s.subspec 'arc' do |as|
 #     as.source_files = "GCDAsync*.{h,m}"
